@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.0.2",
     author="Fathi AbdelMalek",
     author_email="abdelmalek.fathi.2001@gmail.com",
-    url="https://github.com/fathiabdelmalek/cryptopy.git",
+    url="https://github.com/fathiabdelmalek/cipherspy.git",
     description="Strong Passwords Generator made with python.",
     license="OSI Approved :: MIT License",
     long_description=long_description,
