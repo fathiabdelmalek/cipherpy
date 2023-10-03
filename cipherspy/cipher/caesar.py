@@ -35,7 +35,7 @@ class CaesarCipher:
 # Example usage:
 if __name__ == "__main__":
     shift = 3
-    message = "hello world"
+    message = "hello world 2023"
     playfair = CaesarCipher(shift)
     encrypted_message = playfair.encrypt(message)
     decrypted_message = playfair.decrypt(encrypted_message)

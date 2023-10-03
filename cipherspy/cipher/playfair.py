@@ -63,20 +63,29 @@ class PlayfairCipher:
             return self._matrix[row1][col2] + self._matrix[row2][col1]
 
     def encrypt(self, plaintext):
-        plaintext = plaintext.lower().replace("J", "I")
-        plaintext = ''.join(filter(str.isalpha, plaintext))
+        plaintext = plaintext.lower().replace("j", "i")
+        plaintext = ''.join(filter(str.isalnum, plaintext))
         for i in range(1, len(plaintext)):
             if plaintext[i] == plaintext[i - 1] and plaintext[i].isalpha():
-                plaintext = plaintext[:i] + "X" + plaintext[i:]
+                plaintext = plaintext[:i] + 'x' + plaintext[i:]
         ciphertext = ''
         i = 0
         while i < len(plaintext):
-            pair = plaintext[i:i+2]
-            if len(pair) == 1:
-                pair += 'X'
+            if not plaintext[i].isalpha():
+                ciphertext += plaintext[i]
                 i += 1
-            ciphertext += self._encrypt_pair(pair)
-            i += 2
+            else:
+                pair = plaintext[i:i+2]
+                if len(pair) == 1:
+                    pair += 'x'
+                    i += 1
+                elif not pair[1].isalpha():
+                    i += 1
+                    plaintext = plaintext[:i] + 'x' + plaintext[i:]
+                    pair = plaintext[i:i+2]
+                    i -= 1
+                ciphertext += self._encrypt_pair(pair)
+                i += 2
         return ciphertext
 
     def decrypt(self, ciphertext):
@@ -84,16 +93,20 @@ class PlayfairCipher:
         plaintext = ''
         i = 0
         while i < len(ciphertext):
-            pair = ciphertext[i:i+2]
-            plaintext += self._decrypt_pair(pair)
-            i += 2
+            if not ciphertext[i].isalpha():
+                plaintext += ciphertext[i]
+                i += 1
+            else:
+                pair = ciphertext[i:i+2]
+                plaintext += self._decrypt_pair(pair)
+                i += 2
         return plaintext
 
 
 # Example usage:
 if __name__ == "__main__":
     key = "secret"
-    message = "hello world"
+    message = "hello world 2023"
     playfair = PlayfairCipher(key)
     encrypted_message = playfair.encrypt(message)
     decrypted_message = playfair.decrypt(encrypted_message)
