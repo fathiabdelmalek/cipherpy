@@ -16,12 +16,12 @@ class PlayfairCipher:
         return self._matrix
 
     def _prepare_key(self, key):
-        key = key.upper().replace("J", "I")
+        key = key.lower().replace("j", "i")
         unique_chars = []
         for char in key:
             if char not in unique_chars:
                 unique_chars.append(char)
-        alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
+        alphabet = "abcdefghiklmnopqrstuvwxyz"
         for char in alphabet:
             if char not in unique_chars:
                 unique_chars.append(char)
@@ -63,7 +63,7 @@ class PlayfairCipher:
             return self._matrix[row1][col2] + self._matrix[row2][col1]
 
     def encrypt(self, plaintext):
-        plaintext = plaintext.upper().replace("J", "I")
+        plaintext = plaintext.lower().replace("J", "I")
         plaintext = ''.join(filter(str.isalpha, plaintext))
         for i in range(1, len(plaintext)):
             if plaintext[i] == plaintext[i - 1] and plaintext[i].isalpha():
@@ -80,7 +80,7 @@ class PlayfairCipher:
         return ciphertext
 
     def decrypt(self, ciphertext):
-        ciphertext = ciphertext.upper()
+        ciphertext = ciphertext.lower()
         plaintext = ''
         i = 0
         while i < len(ciphertext):
