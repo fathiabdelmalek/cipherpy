@@ -21,8 +21,7 @@ class PlayfairCipher:
         for char in key:
             if char not in unique_chars:
                 unique_chars.append(char)
-        alphabet = "abcdefghiklmnopqrstuvwxyz"
-        for char in alphabet:
+        for char in "abcdefghiklmnopqrstuvwxyz":
             if char not in unique_chars:
                 unique_chars.append(char)
         return "".join(unique_chars)
@@ -66,7 +65,7 @@ class PlayfairCipher:
         plaintext = plaintext.lower().replace("j", "i")
         plaintext = ''.join(filter(str.isalnum, plaintext))
         for i in range(1, len(plaintext)):
-            if plaintext[i] == plaintext[i - 1] and plaintext[i].isalpha():
+            if plaintext[i] == plaintext[i - 1] and plaintext[i].isalpha() and plaintext[i] != 'x':
                 plaintext = plaintext[:i] + 'x' + plaintext[i:]
         ciphertext = ''
         i = 0
