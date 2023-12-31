@@ -9,7 +9,8 @@ class PlayfairCipher:
 
     @key.setter
     def key(self, key: str):
-        self._key = key
+        self._key = self._prepare_key(key)
+        self._matrix = self._generate_matrix()
 
     @property
     def matrix(self):
@@ -35,7 +36,7 @@ class PlayfairCipher:
                 k += 1
         return matrix
 
-    def _get_coordinates(self, char):
+    def _get_coordinates(self, char: chr):
         for i, row in enumerate(self._matrix):
             if char in row:
                 return i, row.index(char)
@@ -61,7 +62,7 @@ class PlayfairCipher:
         else:
             return self._matrix[row1][col2] + self._matrix[row2][col1]
 
-    def encrypt(self, plaintext):
+    def encrypt(self, plaintext: str) -> str:
         plaintext = plaintext.lower().replace("j", "i")
         plaintext = ''.join(filter(str.isalnum, plaintext))
         for i in range(1, len(plaintext)):
@@ -87,7 +88,7 @@ class PlayfairCipher:
                 i += 2
         return ciphertext
 
-    def decrypt(self, ciphertext):
+    def decrypt(self, ciphertext: str) -> str:
         ciphertext = ciphertext.lower()
         plaintext = ''
         i = 0
@@ -105,10 +106,10 @@ class PlayfairCipher:
 # Example usage:
 if __name__ == "__main__":
     key = "secret"
-    message = "hello world 2023"
-    playfair = PlayfairCipher(key)
-    encrypted_message = playfair.encrypt(message)
-    decrypted_message = playfair.decrypt(encrypted_message)
+    message = "HELLO world 2023"
+    cipher = PlayfairCipher(key)
+    encrypted_message = cipher.encrypt(message)
+    decrypted_message = cipher.decrypt(encrypted_message)
 
     print("Original message:", message)
     print("Encrypted message:", encrypted_message)
