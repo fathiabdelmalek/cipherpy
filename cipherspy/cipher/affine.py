@@ -40,13 +40,14 @@ class AffineCipher:
 
 # Example usage:
 if __name__ == "__main__":
-    base = 1
-    shift = 2
-    message = "HELLO world 2024"
-    cipher = AffineCipher(base, shift)
-    encrypted_message = cipher.encrypt(message)
-    decrypted_message = cipher.decrypt(encrypted_message)
+    key = (9, 4, 5, 7)
+    cipher = AffineCipher(key)
 
+    message = "HELLO world 2023"
     print("Original message:", message)
+
+    encrypted_message = cipher.encrypt(message)
     print("Encrypted message:", encrypted_message)
+
+    decrypted_message = cipher.decrypt(encrypted_message)
     print("Decrypted message:", decrypted_message)

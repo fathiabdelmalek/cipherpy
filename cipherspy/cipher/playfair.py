@@ -105,12 +105,14 @@ class PlayfairCipher:
 
 # Example usage:
 if __name__ == "__main__":
-    key = "secret"
-    message = "HELLO world 2023"
+    key = (9, 4, 5, 7)
     cipher = PlayfairCipher(key)
-    encrypted_message = cipher.encrypt(message)
-    decrypted_message = cipher.decrypt(encrypted_message)
 
+    message = "HELLO world 2023"
     print("Original message:", message)
+
+    encrypted_message = cipher.encrypt(message)
     print("Encrypted message:", encrypted_message)
+
+    decrypted_message = cipher.decrypt(encrypted_message)
     print("Decrypted message:", decrypted_message)

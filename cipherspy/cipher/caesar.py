@@ -19,26 +19,26 @@ class CaesarCipher:
         return char
 
     def encrypt(self, plaintext: str) -> str:
-        plaintext = plaintext.lower()
-        encrypted_text = ''.join([self._shift_char(char) for char in plaintext])
+        encrypted_text = ''.join([self._shift_char(char) for char in plaintext.lower()])
         return encrypted_text
 
     def decrypt(self, ciphertext: str) -> str:
-        ciphertext = ciphertext.lower()
         self._shift = -self._shift
-        decrypted_text = ''.join([self._shift_char(char) for char in ciphertext])
+        decrypted_text = ''.join([self._shift_char(char) for char in ciphertext.lower()])
         self._shift = -self._shift
         return decrypted_text
 
 
 # Example usage:
 if __name__ == "__main__":
-    shift = 3
-    message = "HELLO world 2023"
-    cipher = CaesarCipher(shift)
-    encrypted_message = cipher.encrypt(message)
-    decrypted_message = cipher.decrypt(encrypted_message)
+    key = (9, 4, 5, 7)
+    cipher = CaesarCipher(key)
 
+    message = "HELLO world 2023"
     print("Original message:", message)
+
+    encrypted_message = cipher.encrypt(message)
     print("Encrypted message:", encrypted_message)
+
+    decrypted_message = cipher.decrypt(encrypted_message)
     print("Decrypted message:", decrypted_message)
