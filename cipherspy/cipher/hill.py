@@ -7,6 +7,13 @@ class HillCipher:
             self._key = key
         else:
             raise ValueError('key length must be 4')
+        det = self._key[0] * self._key[3] - self._key[1] * self._key[2]
+        if math.gcd(det, 26) == 1:
+            self._det = det
+            self._det_inverse = pow(self._det, -1, 26)
+        else:
+            raise ValueError("The key matrix is not invertible for the given modulus.")
+
 
     @property
     def key(self):
@@ -18,46 +25,26 @@ class HillCipher:
             self._key = key
         else:
             raise ValueError('key length must be 4')
+        det = self._key[0] * self._key[3] - self._key[1] * self._key[2]
+        if math.gcd(det, 26) == 1:
+            self._det = det
+            self._det_inverse = pow(self._det, -1, 26)
+        else:
+            raise ValueError("The key matrix is not invertible for the given modulus.")
 
     def _encrypt_pair(self, pair):
-        rp1 = pair[0]
-        rp2 = pair[1]
         p1 = chr(ord(pair[0]) - ord('a') + 1)
         p2 = chr(ord(pair[1]) - ord('a') + 1)
-        op1 = ord(p1)
-        op2 = ord(p2)
-        k1 = self._key[0]
-        k2 = self._key[1]
-        k3 = self._key[2]
-        k4 = self._key[3]
         c1 = chr(((ord(p1) * self._key[0] + ord(p2) * self._key[1]) % 26) + ord('a'))
         c2 = chr(((ord(p1) * self._key[2] + ord(p2) * self._key[3]) % 26) + ord('a'))
-        print(f"real p1 -> {ord(rp1)} -> {rp1}")
-        print(f"real p2 -> {ord(rp2)} -> {rp2}")
-        print(f"p1 -> {op1} -> {p1}")
-        print(f"p2 -> {op2} -> {p2}")
-        print(f"calc 1: [{op1} * {k1} + {op2} * {k2} % {26}] | [{op1} * {k3} + {op2} * {k4} % {26}]")
-        print(f"calc 2: [{op1 * k1} + {op2 * k2} % {26}] | [{op1 * k3} + {op2 * k4} % {26}]")
-        print(f"calc 3: [{op1 * k1 + op2 * k2} % {26}] | [{op1 * k3 + op2 * k4} % {26}]")
-        print(f"calc 4: [{(op1 * k1 + op2 * k2) % 26}] | [{(op1 * k3 + op2 * k4) % 26}]")
-        print(f"result: [{(op1 * k1 + op2 * k2) % 26 + ord('a')}] | [{(op1 * k3 + op2 * k4) % 26 + ord('a')}]")
-        print(f"char 1: {(op1 * k1 + op2 * k2) % 26 + ord('a')} -> {chr((op1 * k1 + op2 * k2) % 26 + ord('a'))}")
-        print(f"char 2: {(op1 * k3 + op2 * k4) % 26 + ord('a')} -> {chr((op1 * k3 + op2 * k4) % 26 + ord('a'))}")
-        return chr(ord(c1)) + chr(ord(c2))
+        return c1 + c2
 
     def _decrypt_pair(self, pair):
         p1 = chr(ord(pair[0]) - ord('a') + 1)
         p2 = chr(ord(pair[1]) - ord('a') + 1)
-        det = self._key[0] * self._key[3] - self._key[1] * self._key[2]
-        if math.gcd(det, 26) != 1:
-            raise ValueError("The key matrix is not invertible for the given modulus.")
-        det_inverse = pow(det, -1, 26)
-        print(det_inverse)
-        print((det_inverse * (ord(p1) * self._key[3] - ord(p2) * self._key[1])) % 26)
-        print((det_inverse * (ord(p1) * self._key[2] - ord(p2) * self._key[3])) % 26)
-        c1 = chr(((det_inverse * (ord(p1) * self._key[3] - ord(p2) * self._key[1])) % 26) + ord('a'))
-        c2 = chr(((det_inverse * (-ord(p1) * self._key[2] + ord(p2) * self._key[0])) % 26) + ord('a'))
-        return chr(ord(c1)) + chr(ord(c2))
+        c1 = chr(((self._det_inverse * (ord(p1) * self._key[3] - ord(p2) * self._key[1])) % 26) + ord('a'))
+        c2 = chr(((self._det_inverse * (-ord(p1) * self._key[2] + ord(p2) * self._key[0])) % 26) + ord('a'))
+        return c1 + c2
 
     def encrypt(self, plaintext: str) -> str:
         plaintext = ''.join(filter(str.isalnum, plaintext.lower()))
