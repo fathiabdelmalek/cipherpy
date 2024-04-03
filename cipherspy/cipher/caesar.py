@@ -1,13 +1,21 @@
+from cipherspy.exceptions import NegativeNumberException
+
+
 class CaesarCipher:
     def __init__(self, shift: int):
-        self._shift = shift % 26
+        super().__init__()
+        if shift <= 0:
+            raise NegativeNumberException(shift)
+        self._shift: int = shift % 26
 
     @property
-    def shift(self):
+    def shift(self) -> int:
         return self._shift
 
     @shift.setter
-    def shift(self, shift: int):
+    def shift(self, shift: int) -> None:
+        if shift <= 0:
+            raise NegativeNumberException(shift)
         self._shift = shift % 26
 
     def _shift_char(self, char: chr):
@@ -23,6 +31,7 @@ class CaesarCipher:
         return encrypted_text
 
     def decrypt(self, ciphertext: str) -> str:
+        ciphertext = ciphertext.lower()
         self._shift = -self._shift
         decrypted_text = ''.join([self._shift_char(char) for char in ciphertext.lower()])
         self._shift = -self._shift
@@ -31,10 +40,10 @@ class CaesarCipher:
 
 # Example usage:
 if __name__ == "__main__":
-    key = (9, 4, 5, 7)
-    cipher = CaesarCipher(key)
+    shift = 3
+    cipher = CaesarCipher(shift)
 
-    message = "HELLO world 2023"
+    message = "HELLO world 2024"
     print("Original message:", message)
 
     encrypted_message = cipher.encrypt(message)

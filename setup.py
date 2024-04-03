@@ -1,11 +1,11 @@
-import setuptools
+from setuptools import setup
 
 with open("README.md", "r") as readme:
     long_description = readme.read()
 
-setuptools.setup(
+setup(
     name="cipherspy",
-    version="0.3.0",
+    version="0.3.1",
     author="Fathi AbdelMalek",
     author_email="abdelmalek.fathi.2001@gmail.com",
     url="https://github.com/fathiabdelmalek/cipherspy.git",
@@ -14,7 +14,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=['cipherspy', 'cipherspy.cipher'],
-    python_requires=">=3.6",
+    python_requires=">=3",
     classifiers=[
         "Development Status :: 1 - Planning",
         "Intended Audience :: Developers",
@@ -23,6 +23,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 Only",
         "Topic :: Security",
         "Topic :: Security :: Cryptography",
     ]

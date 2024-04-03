@@ -1,25 +1,26 @@
 class PlayfairCipher:
-    def __init__(self, key: str):
-        self._key = self._prepare_key(key)
+
+    def __init__(self, key_str: str):
+        super().__init__()
+        self._key_str = self._prepare_key(key_str)
         self._matrix = self._generate_matrix()
 
     @property
-    def key(self):
-        return self._key
+    def key_str(self) -> str:
+        return self._key_str
 
-    @key.setter
-    def key(self, key: str):
-        self._key = self._prepare_key(key)
+    @key_str.setter
+    def key_str(self, key_str: str) -> None:
+        self._key_str = self._prepare_key(key_str)
         self._matrix = self._generate_matrix()
 
     @property
     def matrix(self):
         return self._matrix
 
-    def _prepare_key(self, key):
-        key = key.lower().replace("j", "i")
+    def _prepare_key(self, key_str: str) -> str:
         unique_chars = []
-        for char in key:
+        for char in key_str.lower().replace("j", "i"):
             if char not in unique_chars:
                 unique_chars.append(char)
         for char in "abcdefghiklmnopqrstuvwxyz":
@@ -32,7 +33,7 @@ class PlayfairCipher:
         k = 0
         for i in range(5):
             for j in range(5):
-                matrix[i][j] = self._key[k]
+                matrix[i][j] = self._key_str[k]
                 k += 1
         return matrix
 
@@ -66,7 +67,7 @@ class PlayfairCipher:
         plaintext = plaintext.lower().replace("j", "i")
         plaintext = ''.join(filter(str.isalnum, plaintext))
         for i in range(1, len(plaintext)):
-            if plaintext[i] == plaintext[i - 1] and plaintext[i].isalpha() and plaintext[i] != 'x':
+            if plaintext[i] == plaintext[i-1] and plaintext[i].isalpha() and plaintext[i] != 'x':
                 plaintext = plaintext[:i] + 'x' + plaintext[i:]
         ciphertext = ''
         i = 0
@@ -105,10 +106,10 @@ class PlayfairCipher:
 
 # Example usage:
 if __name__ == "__main__":
-    key = (9, 4, 5, 7)
+    key = "secret"
     cipher = PlayfairCipher(key)
 
-    message = "HELLO world 2023"
+    message = "HELLO world 2024"
     print("Original message:", message)
 
     encrypted_message = cipher.encrypt(message)
