@@ -5,7 +5,7 @@ with open("README.md", "r") as readme:
 
 setup(
     name="cipherspy",
-    version="0.3.1",
+    version="0.4.0",
     author="Fathi AbdelMalek",
     author_email="abdelmalek.fathi.2001@gmail.com",
     url="https://github.com/fathiabdelmalek/cipherspy.git",

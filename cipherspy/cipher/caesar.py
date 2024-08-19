@@ -1,11 +1,11 @@
+import numpy as np
+
 from cipherspy.exceptions import NegativeNumberException
 
 
 class CaesarCipher:
     def __init__(self, shift: int):
-        super().__init__()
-        if shift <= 0:
-            raise NegativeNumberException(shift)
+        self._validate_shift()
         self._shift: int = shift % 26
 
     @property
@@ -14,28 +14,28 @@ class CaesarCipher:
 
     @shift.setter
     def shift(self, shift: int) -> None:
-        if shift <= 0:
-            raise NegativeNumberException(shift)
+        self._validate_shift()
         self._shift = shift % 26
 
-    def _shift_char(self, char: chr):
-        if char.isalpha():
-            shifted = ord(char) + self._shift
-            if shifted > ord('z'):
-                shifted -= 26
-            return chr(shifted)
-        return char
+    @staticmethod
+    def _validate_shift() -> None:
+        if shift <= 0:
+            raise NegativeNumberException(shift)
+
+    @staticmethod
+    def _prepare_text(text: str) -> np.ndarray:
+        return np.array([ord(char) - ord('a') for char in text.lower() if char.isalnum()])
+
+    def _process_text(self, text: np.ndarray, encrypt: bool) -> str:
+        shift = self._shift if encrypt else -self.shift
+        processed_text = (text + shift) % 26
+        return ''.join([chr(char + ord('a')) for char in processed_text])
 
     def encrypt(self, plaintext: str) -> str:
-        encrypted_text = ''.join([self._shift_char(char) for char in plaintext.lower()])
-        return encrypted_text
+        return self._process_text(self._prepare_text(plaintext), True)
 
     def decrypt(self, ciphertext: str) -> str:
-        ciphertext = ciphertext.lower()
-        self._shift = -self._shift
-        decrypted_text = ''.join([self._shift_char(char) for char in ciphertext.lower()])
-        self._shift = -self._shift
-        return decrypted_text
+        return self._process_text(self._prepare_text(ciphertext), False)
 
 
 # Example usage:
