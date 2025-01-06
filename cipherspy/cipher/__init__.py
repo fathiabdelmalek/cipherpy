@@ -1,6 +1,6 @@
-from cipherspy.cipher.caesar import CaesarCipher
-from cipherspy.cipher.playfair import PlayfairCipher
-from cipherspy.cipher.affine import AffineCipher
-from cipherspy.cipher.hill import HillCipher
+from cipherspy.cipher.caesar import CaesarCipherAlgorithm
+from cipherspy.cipher.playfair import PlayfairCipherAlgorithm
+from cipherspy.cipher.affine import AffineCipherAlgorithm
+from cipherspy.cipher.hill import HillCipherAlgorithm
 
-__all__ = ["CaesarCipher", "PlayfairCipher", "AffineCipher", "HillCipher"]
+__all__ = ["CaesarCipherAlgorithm", "PlayfairCipherAlgorithm", "AffineCipherAlgorithm", "HillCipherAlgorithm"]

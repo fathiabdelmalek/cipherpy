@@ -2,9 +2,12 @@ import math
 
 import numpy as np
 
+from cipherspy.cipher.base_cipher import BaseCipherAlgorithm
 
-class HillCipher:
+
+class HillCipherAlgorithm(BaseCipherAlgorithm):
     def __init__(self, key: str):
+        super(HillCipherAlgorithm, self).__init__('hill')
         self._key_size: int = int(math.sqrt(len(key)))
         if self._key_size * self._key_size != len(key):
             raise ValueError("Key must give quare matrix")
@@ -71,7 +74,8 @@ class HillCipher:
 # Example usage:
 if __name__ == "__main__":
     key = 'GYBNQKURP'
-    cipher = HillCipher(key)
+    cipher = HillCipherAlgorithm(key)
+    print(cipher.name)
 
     message = "HELLO world 2024"
     print("Original message:", message)

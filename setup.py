@@ -5,11 +5,11 @@ with open("README.md", "r") as readme:
 
 setup(
     name="cipherspy",
-    version="0.4.1",
+    version="0.5.0",
     author="Fathi AbdelMalek",
     author_email="abdelmalek.fathi.2001@gmail.com",
     url="https://github.com/fathiabdelmalek/cipherspy.git",
-    description="Strong Passwords Generator made with python.",
+    description="Cipher algorithms implemented in python.",
     license="OSI Approved :: MIT License",
     long_description=long_description,
     long_description_content_type="text/markdown",

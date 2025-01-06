@@ -1,10 +1,12 @@
 import numpy as np
 
+from cipherspy.cipher.base_cipher import BaseCipherAlgorithm
 from cipherspy.exceptions import NegativeNumberException
 
 
-class CaesarCipher:
+class CaesarCipherAlgorithm(BaseCipherAlgorithm):
     def __init__(self, shift: int):
+        super(CaesarCipherAlgorithm, self).__init__('caesar')
         self._validate_shift()
         self._shift: int = shift % 26
 
@@ -27,7 +29,7 @@ class CaesarCipher:
         return np.array([ord(char) - ord('a') for char in text.lower() if char.isalnum()])
 
     def _process_text(self, text: np.ndarray, encrypt: bool) -> str:
-        shift = self._shift if encrypt else -self.shift
+        shift = self._shift if encrypt else -self._shift
         processed_text = (text + shift) % 26
         return ''.join([chr(char + ord('a')) for char in processed_text])
 
@@ -41,7 +43,8 @@ class CaesarCipher:
 # Example usage:
 if __name__ == "__main__":
     shift = 3
-    cipher = CaesarCipher(shift)
+    cipher = CaesarCipherAlgorithm(shift)
+    print(cipher.name)
 
     message = "HELLO world 2024"
     print("Original message:", message)

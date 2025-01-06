@@ -1,10 +1,12 @@
 import numpy as np
 
+from cipherspy.cipher.base_cipher import BaseCipherAlgorithm
 from cipherspy.exceptions import NegativeNumberException
 
 
-class AffineCipher:
+class AffineCipherAlgorithm(BaseCipherAlgorithm):
     def __init__(self, shift: int, multiplier: int):
+        super(AffineCipherAlgorithm, self).__init__('affine')
         self._validate_params(shift, multiplier)
         self._shift: int = shift % 26
         self._multiplier: int = multiplier
@@ -67,7 +69,8 @@ class AffineCipher:
 if __name__ == "__main__":
     shift = 3
     multiplier = 3
-    cipher = AffineCipher(shift, multiplier)
+    cipher = AffineCipherAlgorithm(shift, multiplier)
+    print(cipher.name)
 
     message = "HELLO world 2024"
     print("Original message:", message)

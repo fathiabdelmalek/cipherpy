@@ -1,9 +1,11 @@
 import numpy as np
 
+from cipherspy.cipher.base_cipher import BaseCipherAlgorithm
 
-class PlayfairCipher:
 
+class PlayfairCipherAlgorithm(BaseCipherAlgorithm):
     def __init__(self, key: str):
+        super(PlayfairCipherAlgorithm, self).__init__('playfair')
         self._key: str = self._prepare_key(key)
         self._matrix: np.ndarray = self._generate_matrix()
 
@@ -78,7 +80,8 @@ class PlayfairCipher:
 # Example usage:
 if __name__ == "__main__":
     key = "secret"
-    cipher = PlayfairCipher(key)
+    cipher = PlayfairCipherAlgorithm(key)
+    print(cipher.name)
 
     message = "HELLO world 2024"
     print("Original message:", message)
