@@ -1,11 +1,11 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md", "r") as readme:
     long_description = readme.read()
 
 setup(
     name="cipherspy",
-    version="0.6.1",
+    version="0.6.2",
     author="Fathi AbdelMalek",
     author_email="abdelmalek.fathi.2001@gmail.com",
     url="https://github.com/fathiabdelmalek/cipherspy.git",
@@ -13,7 +13,7 @@ setup(
     license="OSI Approved :: MIT License",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=['cipherspy', 'cipherspy.cipher', 'cipherspy.utilities'],
+    packages=find_packages(),
     python_requires=">=3",
     install_requires=["numpy"],
     classifiers=[
