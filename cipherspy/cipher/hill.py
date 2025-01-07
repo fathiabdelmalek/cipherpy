@@ -8,25 +8,15 @@ from cipherspy.cipher.base_cipher import BaseCipherAlgorithm
 class HillCipherAlgorithm(BaseCipherAlgorithm):
     def __init__(self, key: str):
         super(HillCipherAlgorithm, self).__init__('hill')
-        self._key_size: int = int(math.sqrt(len(key)))
-        if self._key_size * self._key_size != len(key):
-            raise ValueError("Key must give quare matrix")
-        self._key_matrix: list[int] = [ord(char) - ord('a') for char in key]
-        self._key: np.ndarray = np.array(self._key_matrix).reshape(self._key_size, self._key_size)
-        self._inv_key: np.ndarray = self._validate_key()
+        self._prepare_key(key)
 
     @property
     def key(self) -> np.ndarray:
         return self._key
 
     @key.setter
-    def key(self, value: np.ndarray) -> None:
-        self._key_size: int = int(math.sqrt(len(key)))
-        if self._key_size * self._key_size != len(key):
-            raise ValueError("Key must give quare matrix")
-        self._key_matrix: list[int] = [ord(char) - ord('a') for char in key]
-        self._key: np.ndarray = np.array(self._key_matrix).reshape(self._key_size, self._key_size)
-        self._inv_key: np.ndarray = self._validate_key()
+    def key(self, key: str) -> None:
+        self._prepare_key(key)
 
     @property
     def inv_key(self) -> np.ndarray:
@@ -46,6 +36,14 @@ class HillCipherAlgorithm(BaseCipherAlgorithm):
     @staticmethod
     def _vector_to_text(vector: np.ndarray) -> str:
         return ''.join([chr((int(round(x)) % 26) + ord('a')) for x in vector])
+
+    def _prepare_key(self, key: str) -> None:
+        self._key_size: int = int(math.sqrt(len(key)))
+        if self._key_size * self._key_size != len(key):
+            raise ValueError("Key must give quare matrix")
+        self._key_matrix: list[int] = [ord(char) - ord('a') for char in key]
+        self._key: np.ndarray = np.array(self._key_matrix).reshape(self._key_size, self._key_size)
+        self._inv_key: np.ndarray = self._validate_key()
 
     def _validate_key(self) -> np.ndarray:
         det = int(round(np.linalg.det(self._key))) % 26
