@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class BaseCipherAlgorithm(ABC):
@@ -9,8 +9,10 @@ class BaseCipherAlgorithm(ABC):
     def name(self):
         return self._name
 
+    @abstractmethod
     def encrypt(self, plaintext):
         pass
 
+    @abstractmethod
     def decrypt(self, ciphertext):
         pass
